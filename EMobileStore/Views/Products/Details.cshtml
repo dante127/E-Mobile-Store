@@ -1,0 +1,90 @@
+﻿@model EMobileStore.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+          Name
+        </dt>
+
+        <dd>
+          @ViewBag.pro.Name
+        </dd>
+
+        <dt>
+           price
+        </dt>
+
+        <dd>
+            @ViewBag.pro.price
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.quatity)
+        </dt>
+
+        <dd>
+            @ViewBag.pro.quatity
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Photo)
+        </dt>
+
+        <dd>
+            @ViewBag.pro.Photo
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+
+        <dd>
+            @ViewBag.pro.description
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IdCat)
+        </dt>
+
+        <dd>
+            @ViewBag.pro.IdCat
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.color)
+        </dt>
+
+        <dd>
+            @ViewBag.pro.color
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.storage)
+        </dt>
+
+        <dd>
+            @ViewBag.pro.storage
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.score)
+        </dt>
+
+        <dd>
+            @ViewBag.pro.score
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = ViewBag.pro.ProductId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

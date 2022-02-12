@@ -1,0 +1,679 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .rate {
+            float: left;
+            height: 46px;
+            padding: 0 10px;
+        }
+
+            .rate:not(:checked) > input {
+                position: absolute;
+                top: -9999px;
+            }
+
+            .rate:not(:checked) > label {
+                float: right;
+                width: 1em;
+                overflow: hidden;
+                white-space: nowrap;
+                cursor: pointer;
+                font-size: 30px;
+                color: #ccc;
+            }
+
+                .rate:not(:checked) > label:before {
+                    content: '★ ';
+                }
+
+            .rate > input:checked ~ label {
+                color: #ffc700;
+            }
+
+            .rate:not(:checked) > label:hover,
+            .rate:not(:checked) > label:hover ~ label {
+                color: #deb217;
+            }
+
+            .rate > input:checked + label:hover,
+            .rate > input:checked + label:hover ~ label,
+            .rate > input:checked ~ label:hover,
+            .rate > input:checked ~ label:hover ~ label,
+            .rate > label:hover ~ input:checked ~ label {
+                color: #c59b08;
+            }
+
+        /* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
+    </style>
+
+
+</head>
+<body>
+    <!-- product-description -->
+
+    <div class="box-body">
+        <div class="row">
+      
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <div id="slideshow">
+                    <div class="desoslide-wrapper">
+                        <a href=#>
+                            <img class="img-responsive animated fadeIn"
+                                 src="~/images/@ViewBag.productd.Photo" style="width:500px">
+                        </a>
+                        <div class="desoslide-overlay" style="left: 0px; top: 304px; width: 336px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; opacity: 0.7;">
+                            <div class="desoslide-controls-wrapper">
+                                <a class="desoslide-controls prev" href="#prev"></a>
+                                <a class="desoslide-controls pause" href="#pause" style="display: none;"></a>
+                                <a class="desoslide-controls play" href="#play"></a>
+                                <a class="desoslide-controls next" href="#next"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                @if (ViewBag.rate != null)
+                {
+                    <h2 class="circle-primary-color"> @ViewBag.rate</h2>
+                }
+
+                <div class="product-single">
+                    <h2>@ViewBag.productd.Name</h2>
+
+                    <div class="product-rating">
+                        <span><i class="fa fa-star"></i></span>
+                        <span><i class="fa fa-star"></i></span>
+                        <span><i class="fa fa-star"></i></span>
+                        <span><i class="fa fa-star"></i></span>
+                        <span><i class="fa fa-star-o"></i></span>
+                        <span class="text-secondary">&nbsp;(4.8 Review Stars)</span>
+                    </div>
+
+                    <p class="product-price" style="font-size: 38px;">@(ViewBag.productd.price - 100)$ <strike>@ViewBag.productd.price </strike></p>
+                    <p>@ViewBag.productd.description</p>
+
+                    <div class="product-quantity">
+                        <h5>"Available Quantity : " @ViewBag.productd.quatity</h5>
+                        <div class="quantity mb20">
+                            <input type="number" class="input-text qty text" step="1" min="1" max="6" name="quantity" value="1" title="Qty" size="4" pattern="[0-9]*">
+                        </div>
+
+                        <!--For Rating-->
+                        <form method="post" action="@Url.Action("star","Home")" id="jsform">
+                            <div class="rate">
+                                Rate:
+
+                                <input type="radio" id="star5" name="rate" value="5" />
+                                <label for="star5" title="text">5 stars</label>
+                                <input type="radio" id="star4" name="rate" value="4" />
+                                <label for="star4" title="text">4 stars</label>
+                                <input type="radio" id="star3" name="rate" value="3" />
+                                <label for="star3" title="text">3 stars</label>
+                                <input type="radio" id="star2" name="rate" value="2" />
+                                <label for="star2" title="text">2 stars</label>
+                                <input type="radio" id="star1" name="rate" value="1" />
+                                <label for="star1" title="text">1 star</label>
+                                <input type="hidden" name="id" value="@ViewBag.productd.ProductId" />
+
+                        </form>
+                        <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js'>
+                        </script>
+                        <script>
+                                                $(document).ready(function () {
+                                                    $('input[name=rate]').change(function () {
+                                                        $('form').submit();
+                                                    });
+                                                });  </script>
+                    </div>
+
+                    <!--End Rating-->
+
+
+
+
+
+                    <a href="@Url.Action("cart","Home",new { id= ViewBag.productd.ProductId} )">
+                        <img src="@Url.Content("~/images/order-now-red-button.jpg")" />
+                    </a>
+
+                </div>
+
+                @*<button type="submit" class="btn btn-default" onclick="@Url.Action("ProductSingle","Home",new { id=ViewBag.product.ProductId} )">
+                    <i class="fa fa-shopping-cart">
+
+                        </i>&nbsp;Add to cart</button>*@
+
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="box-head scroll-nav">
+                    <div class="head-title">
+                        <a class="page-scroll active" href="#product">Product Details</a>
+                        <a class="page-scroll" href="#rating">Ratings &amp; Reviews</a>
+                        <a class="page-scroll" href="#review">Add Your Reviews</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- highlights -->
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="box" id="product">
+                    <div class="box-body">
+                        <div class="highlights">
+                            <h4 class="product-small-title">Highlights</h4>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <ul class="arrow">
+                                        <li>12.2 MP Rear | 8 MP Front Camera </li>
+                                        <li>4GB RAM </li>
+                                        <li>2700 mAh battery</li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <ul class="arrow">
+                                        <li>Android 8.0 </li>
+                                        <li>Qualcomm Snapdragon 835</li>
+                                        <li>Fingerprint Sensor</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="highlights">
+                            <h4 class="product-small-title">Specification</h4>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <h4>General</h4>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mb30">
+                                    <ul>
+                                        <li>Brand</li>
+                                        <li>Model Number </li>
+                                        <li>Body Material</li>
+                                        <li>Sim Size</li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 mb30">
+                                    <ul>
+                                        <li style="color: #1c1e1e;">Google Pixel </li>
+                                        <li style="color: #1c1e1e;">Google XYZ</li>
+                                        <li style="color: #1c1e1e;">Metal and Polycarbonate</li>
+                                        <li style="color: #1c1e1e;">Micro</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                    <h4>Display</h4>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <ul>
+                                        <li>Screen Size </li>
+                                        <li>Display Resolution </li>
+                                        <li>Pixel Density</li>
+                                        <li>Screen Protection </li>
+                                    </ul>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                    <ul>
+                                        <li style="color: #1c1e1e;">5 inch </li>
+                                        <li style="color: #1c1e1e;">1280 X 720 Pixels</li>
+                                        <li style="color: #1c1e1e;">294 PPI</li>
+                                        <li style="color: #1c1e1e;">Gorilla Glass 4</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+        <!-- rating reviews  -->
+        <div id="rating">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="box">
+                        <div class="box-head">
+                            <h3 class="head-title">Rating &amp; Reviews</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="rating-review">
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <h1>4.8</h1>
+                                        <div class="product-rating">
+                                            <span><i class="fa fa-star"></i></span>
+                                            <span><i class="fa fa-star"></i></span>
+                                            <span><i class="fa fa-star"></i></span>
+                                            <span><i class="fa fa-star"></i></span>
+                                            <span><i class="fa fa-star-o"></i></span>
+                                        </div>
+                                        <p class="text-secondary">20 Ratings &amp; 10 Reviews</p>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <h2>80%</h2>
+                                        <p class="text-secondary">Based on 20 Recommendations.</p>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                                        <h4>Have you used this product?</h4>
+                                        <a href="#" class="btn btn-primary btn-sm">review</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.rating reviews  -->
+            <!-- customers review  -->
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="box">
+                        <div class="box-head">
+                            <h3 class="head-title">Customer Reviews</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="customer-reviews">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="product-rating">
+                                            <span><i class="fa fa-star"></i></span>
+                                            <span><i class="fa fa-star"></i></span>
+                                            <span><i class="fa fa-star"></i></span>
+                                            <span><i class="fa fa-star"></i></span>
+                                            <span><i class="fa fa-star-o"></i></span>
+                                        </div>
+                                        <p class="reviews-text">By <span class="text-default">Michael Byrd</span> on 14 August 2017 </p>
+                                        <p>Mauris aliquet augue seenim finibusat consectetur metus congutiam convallis aliquam conguen ornare exdolornon scelerisque nisl fringilla ut. Maecenas faucibus purus id elementum laoreen a hendrerit ested laoreet nibh vel lacus sagittis, eu laoreet metus viverraed rutrum.</p>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="divider-line"></div>
+                                    </div>
+                                </div>
+                                <div class="customer-reviews">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="product-rating">
+                                            <span><i class="fa fa-star"></i></span>
+                                            <span><i class="fa fa-star"></i></span>
+                                            <span><i class="fa fa-star"></i></span>
+                                            <span><i class="fa fa-star"></i></span>
+                                            <span><i class="fa fa-star-o"></i></span>
+                                        </div>
+                                        <p class="reviews-text">By <span class="text-default">Marc Scott</span> on 13 August 2017 </p>
+                                        <p>Vivamus molestie enim ut libero condimentumvel malesuada mivulpuorem ipsum dolor sitamet consectetur adipiscing elinec semper orcinec ultricies ultricieunc velitest variussed suscipit sed dignissim acanteras aliquet magna ipsum dictum vulputate dolor suscipit non. </p>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="divider-line"></div>
+                                    </div>
+                                </div>
+                                <div class="customer-reviews">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="product-rating">
+                                            <span><i class="fa fa-star"></i></span>
+                                            <span><i class="fa fa-star"></i></span>
+                                            <span><i class="fa fa-star"></i></span>
+                                            <span><i class="fa fa-star"></i></span>
+                                            <span><i class="fa fa-star-o"></i></span>
+                                        </div>
+                                        <p class="reviews-text">By <span class="text-default">William Cassidy</span> on 13 August 2017 </p>
+                                        <p>Suspendisse viverra nibh vel mattis aliqueroin ultricies vitaeex quis sceleriuisque eleifend convallis leoorbi ultricies turpis nullanec accumsan mi molestie nonaecenas cursus massa quis condimentum venenati uspendisse idmassaut lacus dignissim vestibuonec malesuada ultricies euismod. </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- customers review  -->
+            <!-- reviews-form -->
+            <div id="review">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="box">
+                            <div class="box-head">
+                                <h3 class="head-title">Add A Reviews</h3>
+                            </div>
+                            <div class="box-body">
+                                <div class="row">
+                                    <div class="review-form">
+
+                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                            <div class="review-rating">
+                                                <h5>Your Rating : &nbsp;</h5>
+                                                <div class="star-rate" id="rateYo"></div>
+
+
+                                            </div>
+                                        </div>
+                                        <form>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="control-label sr-only " for="name"></label>
+                                                    <input id="name" type="text" class="form-control" placeholder="Name" required="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="control-label sr-only " for="email"></label>
+                                                    <input id="email" type="text" class="form-control" placeholder="Email" required="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12">
+                                                <div class="form-group">
+                                                    <label class="control-label sr-only " for="textarea"></label>
+                                                    <textarea class="form-control" id="textarea" name="textarea" rows="4" placeholder="Enter your Reviews"></textarea>
+                                                </div>
+                                                <button id="submit" name="singlebutton" class="btn btn-primary">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.reviews-form -->
+
+
+
+
+        </div>
+
+
+
+
+
+    </div>
+    <!-- /.product-description -->
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="box-head">
+                    <h3 class="head-title">Related Product</h3>
+                </div>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-body">
+                <div class="row">
+                    @foreach (var i in ViewBag.related)
+                    {
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb30">
+                            <div class="product-block">
+                                <div class="product-img">
+
+
+
+                                    <a href="@Url.Action("ProductSingle","Home",new { id=i.ProductId})"> <img src="~/images/@i.Photo" alt=""></a>
+                                </div>
+                                <div class="product-content">
+                                    <h5><a href="#" class="product-title">@i.Name <strong>(@i.storage, @i.color)</strong></a></h5>
+                                    <div class="product-meta">
+                                        <a href="#" class="product-price">@(i.price - 100)$</a>
+                                        <a href="#" class="discounted-price">@i.price $</a>
+                                        <span class="offer-price">20%off</span>
+                                    </div>
+                                    <div class="shopping-btn">
+                                        <a href="#" class="product-btn btn-like"><i class="fa fa-heart"></i></a>
+                                        <a href="#" class="product-btn btn-cart"><i class="fa fa-shopping-cart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    @*<!-- product -->
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb30">
+                            <div class="product-block">
+                                <div class="product-img"><img src="./images/product_img_1.png" alt=""></div>
+                                <div class="product-content">
+                                    <h5><a href="#" class="product-title">Google Pixel <strong>(128GB, Black)</strong></a></h5>
+                                    <div class="product-meta">
+                                        <a href="#" class="product-price">$1100</a>
+                                        <a href="#" class="discounted-price">$1400</a>
+                                        <span class="offer-price">20%off</span>
+                                    </div>
+                                    <div class="shopping-btn">
+                                        <a href="#" class="product-btn btn-like"><i class="fa fa-heart"></i></a>
+                                        <a href="#" class="product-btn btn-cart"><i class="fa fa-shopping-cart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.product -->
+                        <!-- product -->
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb30">
+                            <div class="product-block">
+                                <div class="product-img"><img src="./images/product_img_2.png" alt=""></div>
+                                <div class="product-content">
+                                    <h5><a href="#" class="product-title">HTC U Ultra <strong>(64GB, Blue)</strong></a></h5>
+                                    <div class="product-meta">
+                                        <a href="#" class="product-price">$1200</a>
+                                        <a href="#" class="discounted-price">$1700</a>
+                                        <span class="offer-price">10%off</span>
+                                    </div>
+                                    <div class="shopping-btn">
+                                        <a href="#" class="product-btn btn-like"><i class="fa fa-heart"></i></a>
+                                        <a href="#" class="product-btn btn-cart"><i class="fa fa-shopping-cart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.product -->
+                        <!-- product -->
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb30">
+                            <div class="product-block">
+                                <div class="product-img"><img src="./images/product_img_3.png" alt=""></div>
+                                <div class="product-content">
+                                    <h5><a href="#" class="product-title">Samsung Galaxy Note 8</a></h5>
+                                    <div class="product-meta">
+                                        <a href="#" class="product-price">$1500</a>
+                                        <a href="#" class="discounted-price">$2000</a>
+                                        <span class="offer-price">40%off</span>
+                                    </div>
+                                    <div class="shopping-btn">
+                                        <a href="#" class="product-btn btn-like"><i class="fa fa-heart"></i></a>
+                                        <a href="#" class="product-btn btn-cart"><i class="fa fa-shopping-cart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.product -->
+                        <!-- product -->
+                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 mb30">
+                            <div class="product-block">
+                                <div class="product-img"><img src="./images/product_img_4.png" alt=""></div>
+                                <div class="product-content">
+                                    <h5><a href="#" class="product-title">Vivo V5 Plus <strong>(Matte Black)</strong></a></h5>
+                                    <div class="product-meta">
+                                        <a href="#" class="product-price">$1500</a>
+                                        <a href="#" class="discounted-price">$2000</a>
+                                        <span class="offer-price">15%off</span>
+                                    </div>
+                                    <div class="shopping-btn">
+                                        <a href="#" class="product-btn btn-like">
+                                            <i class="fa fa-heart"></i>
+                                        </a>
+                                        <a href="#" class="product-btn btn-cart"><i class="fa fa-shopping-cart"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.product -->*@
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.product-single -->
+    </div>
+    <!-- footer -->
+    @*<div class="footer ">
+        <div class="container ">
+            <div class="row ">
+                <!-- footer-company-links -->
+                <!-- footer-contact links -->
+                <div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
+                    <div class="footer-widget ">
+                        <h3 class="footer-title ">Contact Info </h3>
+                        <div class="contact-info ">
+                            <span class="contact-icon "><i class="fa fa-map-marker "></i></span>
+                            <span class="contact-text ">
+                                1683 Pickens Way Sherman,<br>Bird Street Albuquerque
+                                Us 75090
+                            </span>
+                        </div>
+                        <div class="contact-info ">
+                            <span class="contact-icon "><i class="fa fa-phone "></i></span>
+                            <span class="contact-text ">+180-123-4567 / 89</span>
+                        </div>
+                        <div class="contact-info ">
+                            <span class="contact-icon "><i class="fa fa-envelope "></i></span>
+                            <span class="contact-text ">info@quantum.com</span>
+                        </div>
+                    </div>
+                </div>*@
+    <!-- /.footer-useful-links -->
+    @*<div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
+            <div class="footer-widget ">
+                <h3 class="footer-title ">Quick Links</h3>
+                <ul class="arrow ">
+                    <li><a href="# ">Home </a></li>
+                    <li><a href="# ">About</a></li>
+                    <li><a href="# ">Mobiles</a></li>
+                    <li><a href="# ">Blog</a></li>
+                    <li><a href="# ">Contact</a></li>
+                </ul>
+            </div>
+        </div>*@
+    <!-- /.footer-useful-links -->
+    <!-- footer-policy-list-links -->
+    @*<div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
+            <div class="footer-widget ">
+                <h3 class="footer-title ">Policy Info</h3>
+                <ul class="arrow ">
+                    <li><a href="# ">Payments</a></li>
+                    <li><a href="# ">Cancellation &amp; Returns</a></li>
+                    <li><a href="# ">Shipping and Delivery</a></li>
+                    <li><a href="# ">Privacy Policy</a></li>
+                    <li><a href="# ">T &amp; C</a></li>
+                </ul>
+            </div>
+        </div>*@
+    <!-- /.footer-policy-list-links -->
+    <!-- footer-social links -->
+    @*<div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12 ">
+            <div class="footer-widget ">
+                <h3 class="footer-title ">Connect With Us</h3>
+                <div class="ft-social ">
+                    <span><a href="# " class="btn-social btn-facebook "><i class="fa fa-facebook "></i></a></span>
+                    <span><a href="# " class="btn-social btn-twitter "><i class="fa fa-twitter "></i></a></span>
+                    <span><a href="# " class="btn-social btn-googleplus "><i class="fa fa-google-plus "></i></a></span>
+                    <span><a href="# " class=" btn-social btn-linkedin "><i class="fa fa-linkedin "></i></a></span>
+                    <span><a href="# " class=" btn-social btn-pinterest "><i class="fa fa-pinterest-p "></i></a></span>
+                    <span><a href="# " class=" btn-social btn-instagram "><i class="fa fa-instagram "></i></a></span>
+                </div>
+            </div>
+        </div>*@
+    <!-- /.footer-social links -->
+    </div>
+    </div>
+    <!-- tiny-footer -->
+    @*<div class="tiny-footer ">
+                <div class="container ">
+                    <div class="row ">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                            <div class="payment-method alignleft ">
+                                <ul>
+                                    <li><a href="# "><i class="fa fa-cc-paypal fa-2x "></i></a></li>
+                                    <li><a href="# "><i class="fa fa-cc-mastercard fa-2x "></i></a></li>
+                                    <li><a href="# "><i class="fa fa-cc-visa fa-2x "></i></a></li>
+                                    <li><a href="# "><i class="fa fa-cc-discover fa-2x "></i></a></li>
+                                </ul>
+                            </div>
+                            <p class="alignright">
+                                Copyright © All Rights Reserved 2020 Template Design by
+                                <a href="https://easetemplate.com/" target="_blank" class="copyrightlink">EaseTemplate</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- /. tiny-footer -->
+            </div>
+        </div>
+        <!-- /.footer -->*@
+
+
+
+
+
+
+
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="js/menumaker.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/jquery.sticky.js"></script>
+    <script type="text/javascript" src="js/sticky-header.js"></script>
+    <script type="text/javascript" src="js/scrolling-nav.js"></script>
+    <script type="text/javascript" src="js/jquery.easing.min.js"></script>
+    <script type="text/javascript" src="js/jquery.rateyo.min.js"></script>
+    <script src="js/jquery.desoslide.js "></script>
+    <script type="text/javascript">
+    $('#slideshow').desoSlide({
+        thumbs: $('ul.slideshow_thumbs li > a'),
+        effect: {
+            provider: 'animate',
+            name: 'fade'
+        }
+
+    });
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+
+  $("#rateYo").rateYo({
+    rating: 3.6,
+    starWidth: "16px"
+  });
+
+});
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,269 @@
+﻿@model IEnumerable<EMobileStore.Models.Product>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Store</title>
+
+    <!-- Bootstrap -->
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Style CSS -->
+    <link href="~/Content/css/style.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i" rel="stylesheet">
+    <!-- owl-carousel -->
+    <link href="~/Content/css/owl.carousel.css" rel="stylesheet">
+    <link href="~/Content/css/owl.theme.default.css" rel="stylesheet">
+    <!-- FontAwesome CSS -->
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <!-- top-header-->
+    <div class="top-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-7 col-sm-6 hidden-xs">
+                    <p class="top-text">Flexible Delivery, Fast Delivery.</p>
+                </div>
+                <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+                    <ul>
+                        <li>+180-123-4567</li>
+                        <li>info@demo.com</li>
+                        <li><a href="#">Help</a></li>
+                    </ul>
+                </div>
+            </div>
+            <!-- /.top-header-->
+        </div>
+    </div>
+    <!-- header-section-->
+    <div class="header-wrapper">
+        <div class="container">
+            <div class="row">
+                <!-- logo -->
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-8">
+                    <div class="logo">
+                        <a href="@Url.Action("Index","Home")"><img src="~/images/logo.png" alt=""> </a>
+                    </div>
+                </div>
+                <!-- /.logo -->
+                <!-- search -->
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="search-bg">
+                        <input type="text" class="form-control" placeholder="Search Here">
+
+                        <a href="@Url.Action("productsingle","home",new { id =12})">
+                            <button type="Submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </a>
+
+
+
+                    </div>
+                </div>
+                <!-- /.search -->
+                <!-- account -->
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="account-section">
+                        @if (Session["ad"] != null)
+                        {
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>@Html.ActionLink("Admin Page", "index", "products")</li>
+                                <li>@Html.ActionLink("Logout", "Logout", "Customers")</li>
+                            </ul>
+                        }
+                        else if (Session["login"] != null)
+                        {
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>@Html.ActionLink("Logout", "Logout", "Customers")</li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>@Html.ActionLink("Register", "Register", "Customers")</li>
+                                <li>@Html.ActionLink("Log in", "Login", "Customers")</li>
+                            </ul>
+                        }
+                        <ul>
+                            @*<li>
+                                    <a href="#" class="title"><i class="fa fa-shopping-cart"></i>   <sup class="cart-quantity">1</sup></a>
+                                </li>*@
+                        </ul>
+                    </div>
+                    <!-- /.account -->
+                </div>
+                <!-- search -->
+            </div>
+        </div>
+        <!-- navigation -->
+        <div class="navigation">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <!-- navigations-->
+                        <div id="navigation">
+                            <ul>
+                                <li class="active"><a href="@Url.Action("index","home")">Home</a></li>
+                                <li class="has-sub">
+                                    <a href="#">Mobiles</a>
+                                    <ul>
+                                        <li><a href="@Url.Action("productlist","home")">Mobile List</a></li>
+
+                                        <li class=''>
+                                            <a href='@Url.Action("Apple","Home")'>Apple</a>
+                                           
+                                        </li>
+                                        <li class=''>
+                                            <a href='@Url.Action("Sam","Home")'>Samsung</a>
+
+                                        </li>
+                                        <li class=''>
+                                            <a href='@Url.Action("Haw","Home")'>Hawawi</a>
+                                        </li>
+                                        <li class=''>
+                                            <a href='@Url.Action("Acc","Home")'>accessories</a>
+
+                                        </li>
+
+                                    </ul>
+                                </li>
+
+
+                                <li class="has-sub">
+                                    <a href="#">Pages</a>
+                                    <ul>
+                                        <li><a href="@Url.Action("checkform","home")">Checkout Form</a></li>
+
+                                        <li><a href="@Url.Action("cart","home")">Cart</a> </li>
+
+                                    </ul>
+                                </li>
+
+
+                                <li>
+                                    <a href="@Url.Action("about", "home")">About</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /.navigations-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /. header-section-->
+
+    @RenderBody()
+
+    <!-- /.features -->
+    <!-- footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- footer-company-links -->
+                <!-- footer-contact links -->
+                <div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="footer-widget">
+                        <h3 class="footer-title">Contact Info </h3>
+                        <div class="contact-info">
+                            <span class="contact-icon"><i class="fa fa-map-marker"></i></span>
+                            <span class="contact-text">
+                                1683 Pickens Way Sherman,<br>
+                                Bird Street Albuquerque
+                                Us 75090
+                            </span>
+                        </div>
+                        <div class="contact-info">
+                            <span class="contact-icon"><i class="fa fa-phone"></i></span>
+                            <span class="contact-text">+180-123-4567 / 89</span>
+                        </div>
+                        <div class="contact-info">
+                            <span class="contact-icon"><i class="fa fa-envelope"></i></span>
+                            <span class="contact-text">info@demo.com</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.footer-useful-links -->
+                <div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="footer-widget">
+                        <h3 class="footer-title">Quick Links</h3>
+                        <ul class="arrow">
+                            <li><a href="#">Home </a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Mobiles</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.footer-useful-links -->
+                <!-- footer-policy-list-links -->
+                <div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="footer-widget">
+                        <h3 class="footer-title">Policy Info</h3>
+                        <ul class="arrow">
+                            <li><a href="#">Payments</a></li>
+                            <li><a href="#">Cancellation &amp; Returns</a></li>
+                            <li><a href="#">Shipping and Delivery</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">T &amp; C</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.footer-policy-list-links -->
+                <!-- footer-social links -->
+                <div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="footer-widget">
+                        <h3 class="footer-title">Connect With Us</h3>
+                        <div class="ft-social">
+                            <span><a href="https://www.facebook.com/fouad.dante" class="btn-social btn-facebook"><i class="fa fa-facebook"></i></a></span>
+                            <span><a href="#" class="btn-social btn-twitter"><i class="fa fa-twitter"></i></a></span>
+                            <span><a href="#" class="btn-social btn-googleplus"><i class="fa fa-google-plus"></i></a></span>
+                            <span><a href="#" class=" btn-social btn-linkedin"><i class="fa fa-linkedin"></i></a></span>
+                            <span><a href="#" class=" btn-social btn-instagram"><i class="fa fa-instagram"></i></a></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.footer-social links -->
+            </div>
+        </div>
+        <!-- tiny-footer -->
+        <div class="tiny-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="payment-method alignleft">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-cc-paypal fa-2x"></i></a></li>
+                                <li><a href="#"><i class="fa fa-cc-mastercard  fa-2x"></i></a></li>
+                                <li><a href="#"><i class="fa fa-cc-visa fa-2x"></i></a></li>
+                                <li><a href="#"><i class="fa fa-cc-discover fa-2x"></i></a></li>
+                            </ul>
+                        </div>
+                        <p class="alignright">
+                            Copyright © All Rights Reserved 2020 Template Design by
+                            <a href="https://easetemplate.com/" target="_blank" class="copyrightlink">EaseTemplate</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- /. tiny-footer -->
+        </div>
+    </div>
+
+    <script src="~/Content/js/jquery.min.js" type="text/javascript"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="~/Content/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/Content/js/menumaker.js" type="text/javascript"></script>
+    <script type="text/javascript" src="~/Content/js/jquery.sticky.js"></script>
+    <script type="text/javascript" src="~/Content/js/sticky-header.js"></script>
+    <script type="text/javascript" src="~/Content/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="~/Content/js/multiple-carousel.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

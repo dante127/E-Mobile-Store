@@ -1,0 +1,273 @@
+﻿@using EMobileStore.Models
+<html>
+<body>
+    <!-- cart-section -->
+    <div class="space-medium">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                    <div class="box">
+                        <div class="box-head">
+                            <h3 class="head-title">My Cart (02)</h3>
+                        </div>
+                        <!-- cart-table-section -->
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <div class="cart">
+                                    <table class="table table-bordered ">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <span>Item</span>
+                                                </th>
+                                                <th>
+                                                    <span>Price</span>
+                                                </th>
+                                                <th>
+                                                    <span>Quantity</span>
+                                                </th>
+                                                <th>
+                                                    <span>Total</span>
+                                                </th>
+                                                <th>
+                                                </th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+
+                                            @{
+                                                var q = 0;
+                                            }
+                                            @foreach (var p in (List<Item>)Session["cart"])
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <a href="@Url.Action("ProductSingle", "Home", new { id = p.prodcut.ProductId })"><img src="~/images/@p.prodcut.Photo" alt=""></a>
+                                                        <span><a href="#">@p.prodcut.Name</a></span>
+                                                    </td>
+                                                    <td>@p.prodcut.price</td>
+                                                    <td>
+                                                        <div class="product-quantity">
+                                                            <div class="quantity">
+                                                                @*<input type="number" class="input-text qty text" step="1" min="1" max="6" name="quantity" value="1" title="Qty" size="4" pattern="[0-9]*">*@
+                                                                <p> @p.quantitiy </p>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>@(p.prodcut.price * @p.quantitiy)</td>
+                                                    <th scope="row">
+                                                        <a href="@Url.Action("delete", "home", new { id = q })" class="btn-close">
+                                                            <i class="fa fa-times-circle-o"></i>
+                                                        </a>
+                                                    </th>
+                                                    <td>
+                                                        @{
+                                                            List<Item> cart = (List<Item>)Session["cart"];
+                                                            var s = cart.Sum(i => i.quantitiy * p.prodcut.price);
+                                                        } @s$
+
+                                                    </td>
+                                                    @q++;
+                                                </tr>
+                                                            }
+                                            @*<tr>
+                                                    <td>
+                                                        <a href="#"><img src="./images/cart_product_2.png" alt=""></a>
+                                                        <span><a href="#">Apple iPhone 6S </a></span>
+                                                    </td>
+                                                    <td>$1300</td>
+                                                    <td>
+                                                        <div class="product-quantity">
+                                                            <div class="quantity">
+                                                                <input type="number" class="input-text qty text " step="1" min="1" max="6" name="quantity" value="1" title="Qty" size="4" pattern="[0-9]*">
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>$1300.00</td>
+                                                    <th scope="row"><a href="#" class="btn-close"><i class="fa fa-times-circle-o"></i></a></th>
+                                                </tr>*@
+                                        </tbody>
+
+
+
+
+
+
+                                    </table>
+                                </div>
+                                <!-- /.cart-table-section -->
+                            </div>
+                        </div>
+                    </div>
+                    <a href="@Url.Action("productlist","home")" class="btn-link">
+                        <i class="fa fa-angle-left"></i>
+                        back to shopping
+                    </a>
+                </div>
+                <!-- cart-total -->
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                    <div class="box mb30">
+                        <div class="box-head">
+                            <h3 class="head-title">Price Details</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class=" table-responsive">
+                                <div class="pay-amount ">
+                                    <table class="table mb20">
+                                        <tbody>
+                                            <tr>
+                                                <th>
+                                                    <span>Price (2 items)</span>
+                                                </th>
+                                                <td>$2400</td>
+                                            </tr>
+                                            <tr>
+                                                <th>
+                                                    <span>Delivery Charges</span>
+                                                </th>
+                                                <td><strong class="text-green">Free</strong></td>
+                                            </tr>
+                                        </tbody>
+                                        <tbody>
+                                            <tr>
+                                                <th>
+                                                    <span class="mb0" style="font-weight: 700;">Amount Payable</span>
+                                                </th>
+                                                <td style="font-weight: 700; color: #1c1e1e; ">$2400</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <a href="@Url.Action("CheckForm","home")">
+                                    <img src=@Url.Content("~/images/order.png") />
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- coupon-section -->
+                    <div class="box mb30">
+                        <div class="box-head">
+                            <h3 class="head-title">Coupons &amp; Offers</h3>
+                        </div>
+                        <div class="box-body">
+                            <form>
+                                <div class="coupon-form">
+                                    <input type="text" name="coupon_code" class="form-control" id="coupon_code" value="" placeholder="Coupon code">
+                                    <input type="submit" class="btn btn-primary btn-block" name="apply_coupon" value="Apply coupon">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /.coupon-section -->
+                </div>
+            </div>
+            <!-- /.cart-total -->
+        </div>
+    </div>
+    <!-- /.cart-section -->
+    <!-- footer -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- footer-company-links -->
+                <!-- footer-contact links -->
+                <div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="footer-widget">
+                        <h3 class="footer-title">Contact Info </h3>
+                        <div class="contact-info">
+                            <span class="contact-icon"><i class="fa fa-map-marker"></i></span>
+                            <span class="contact-text">
+                                1683 Pickens Way Sherman,<br>
+                                Bird Street Albuquerque
+                                Us 75090
+                            </span>
+                        </div>
+                        <div class="contact-info">
+                            <span class="contact-icon"><i class="fa fa-phone"></i></span>
+                            <span class="contact-text">+180-123-4567 / 89</span>
+                        </div>
+                        <div class="contact-info">
+                            <span class="contact-icon"><i class="fa fa-envelope"></i></span>
+                            <span class="contact-text">info@demo.com</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.footer-useful-links -->
+                <div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="footer-widget">
+                        <h3 class="footer-title">Quick Links</h3>
+                        <ul class="arrow">
+                            <li><a href="#">Home </a></li>
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Mobiles</a></li>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.footer-useful-links -->
+                <!-- footer-policy-list-links -->
+                <div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="footer-widget">
+                        <h3 class="footer-title">Policy Info</h3>
+                        <ul class="arrow">
+                            <li><a href="#">Payments</a></li>
+                            <li><a href="#">Cancellation &amp; Returns</a></li>
+                            <li><a href="#">Shipping and Delivery</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">T &amp; C</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- /.footer-policy-list-links -->
+                <!-- footer-social links -->
+                <div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                    <div class="footer-widget">
+                        <h3 class="footer-title">Connect With Us</h3>
+                        <div class="ft-social">
+                            <span><a href="https://www.facebook.com" class="btn-social btn-facebook"><i class="fa fa-facebook"></i></a></span>
+                            <span><a href="#" class="btn-social btn-twitter"><i class="fa fa-twitter"></i></a></span>
+                            <span><a href="#" class="btn-social btn-googleplus"><i class="fa fa-google-plus"></i></a></span>
+                            <span><a href="#" class=" btn-social btn-linkedin"><i class="fa fa-linkedin"></i></a></span>
+                            <span><a href="#" class=" btn-social btn-instagram"><i class="fa fa-instagram"></i></a></span>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.footer-social links -->
+            </div>
+        </div>
+        <!-- tiny-footer -->
+        <div class="tiny-footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="payment-method alignleft">
+                            <ul>
+                                <li><a href="#"><i class="fa fa-cc-paypal fa-2x"></i></a></li>
+                                <li><a href="#"><i class="fa fa-cc-mastercard  fa-2x"></i></a></li>
+                                <li><a href="#"><i class="fa fa-cc-visa fa-2x"></i></a></li>
+                                <li><a href="#"><i class="fa fa-cc-discover fa-2x"></i></a></li>
+                            </ul>
+                        </div>
+                        <p class="alignright">
+                            Copyright © All Rights Reserved 2020 Template Design by
+                            <a href="https://easetemplate.com/" target="_blank" class="copyrightlink">EaseTemplate</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- /. tiny-footer -->
+        </div>
+    </div>
+    <!-- /.footer -->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="js/menumaker.js" type="text/javascript"></script>
+    <script type="text/javascript" src="js/jquery.sticky.js"></script>
+    <script type="text/javascript" src="js/sticky-header.js"></script>
+</body>
+
+</html>
